@@ -8,8 +8,8 @@ generator client {
 }
 
 model Hotel {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId String
+  id       String    @id @default(cuid()) @map("_id")
+  userId String  
   title    String 
   description     String 
   image String
@@ -37,7 +37,7 @@ model Hotel {
 }
 
 model Room {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  id      String   @id @default(cuid()) @map("_id") 
   title String
   description String
   bedCount Int @default(0)
@@ -59,17 +59,17 @@ model Room {
   soundProofed Boolean @default(false)
 
   Hotel    Hotel?   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  hotelId  String @db.ObjectId
+  hotelId  String 
 
   Booking Booking[]
 }
 
 model Booking {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  id      String @id @default(cuid()) @map("_id")
   userName String
   userId String
-  roomId String @db.ObjectId
-  hotelId String @db.ObjectId
+  roomId String 
+  hotelId String 
   hotelOwnerId String
   startDate DateTime
   endDate DateTime
@@ -87,10 +87,3 @@ model Booking {
   @@index([roomId])
 }
 
-// Address is an embedded document
-type Address {
-  street String
-  city   String
-  state  String
-  zip    String
-}
